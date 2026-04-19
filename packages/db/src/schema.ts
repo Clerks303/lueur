@@ -170,6 +170,8 @@ export const photos = pgTable(
     domain: text("domain"),
     analysis: jsonb("analysis"),
     analysisStatus: text("analysis_status").default("pending"),
+    /** User-safe failure reason when analysis_status='failed'. No stack traces. */
+    errorMessage: text("error_message"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
   },
   (t) => [index("photos_user_created_idx").on(t.userId, t.createdAt.desc())],
