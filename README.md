@@ -25,6 +25,7 @@ Prerequisites:
 - **Docker Desktop** (v29+) with Compose v2
 - **Node.js** ≥ 20
 - **pnpm** ≥ 9.15 — `npm install -g pnpm`
+- **Bun** ≥ 1.1 — `curl -fsSL https://bun.sh/install | bash` (runtime for `apps/api` and `apps/worker`)
 
 First-time setup:
 
