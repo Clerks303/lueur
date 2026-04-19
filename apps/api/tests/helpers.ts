@@ -10,7 +10,14 @@ import { user } from "@lueur/db";
 import { buildApp } from "../src/app.js";
 import { getDb } from "../src/lib/db.js";
 
-export const testDbUrl = process.env.DATABASE_URL;
+/**
+ * True iff setup.ts saw a DATABASE_URL in the environment (i.e. local dev
+ * with the Docker Postgres up). False in CI, which skips every DB-touching
+ * suite via describe.skipIf(!hasLiveDb).
+ */
+export const hasLiveDb = process.env.LUEUR_HAS_LIVE_DB === "1";
+/** @deprecated use hasLiveDb. Kept as alias for existing test files. */
+export const testDbUrl = hasLiveDb ? process.env.DATABASE_URL : undefined;
 
 /** Ensures a BETTER_AUTH_SECRET is set before any auth code runs. */
 export function setupTestEnv(): void {
