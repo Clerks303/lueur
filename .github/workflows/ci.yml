@@ -52,9 +52,11 @@ jobs:
       - name: Check OpenAPI spec is up to date
         env:
           # Dummy values so loadEnv() passes during the module import that
-          # happens when generating the spec. No real DB is contacted.
+          # happens when generating the spec. No real DB / S3 is contacted.
           DATABASE_URL: postgres://dummy:dummy@localhost:1/dummy
           BETTER_AUTH_SECRET: ci-openapi-secret-000000000000000000000000
+          S3_ACCESS_KEY_ID: dummy
+          S3_SECRET_ACCESS_KEY: dummy
         run: |
           pnpm api:openapi
           if ! git diff --exit-code packages/shared-types/openapi.json; then
