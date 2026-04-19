@@ -55,8 +55,8 @@
 
 | Use case | Model |
 |---|---|
-| Photo analysis (onboarding wow moment) | **Claude Sonnet 4.5** via Anthropic API |
-| Fast scoring, ranking, classification | **Claude Haiku 4.5** |
+| Photo analysis (onboarding wow moment) | **Claude Opus 4.7** via Anthropic API — `claude-opus-4-7` |
+| Fast scoring, ranking, classification | **Claude Haiku 4.5** — `claude-haiku-4-5` |
 | Embeddings (pgvector) | **OpenAI `text-embedding-3-large`** (1536 dims) |
 
 All model usage goes through a thin internal `ai-gateway` module so we can swap providers later without touching product code.

@@ -66,7 +66,7 @@ Nothing else. No account, no duels, no profile, no notifications. **Resist scope
 
 **T07. Worker with BullMQ** (≈ 3 h)
 - `apps/worker` running Bun, connects to Redis (in Docker Compose)
-- Job `analyze-photo`: fetches photo blob from Scaleway (server-side decrypt? — see note below), calls Claude Sonnet 4.5 with `interior_analysis_v1`, writes to `photos.analysis`, inserts `taste_events(type='photo_analyzed')`, sets `analysis_status='done'`
+- Job `analyze-photo`: fetches photo blob from Scaleway (server-side decrypt? — see note below), calls Claude Opus 4.7 (`claude-opus-4-7`) with `interior_analysis_v1`, writes to `photos.analysis`, inserts `taste_events(type='photo_analyzed')`, sets `analysis_status='done'`
 - Add worker to `infra/docker-compose.yml`
 
 **Note on encryption for MVP:** client-side E2E encryption is the **v2 goal**, not week 1. For week 1, upload raw photos with HTTPS-only in transit; document this as a known limitation in `docs/SECURITY-ROADMAP.md`. Proper E2E with libsodium comes week 3–4 once the core loop works.
