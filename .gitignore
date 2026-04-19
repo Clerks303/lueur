@@ -31,6 +31,10 @@ bun.lockb.bak
 .expo/
 .expo-shared/
 web-build/
+# Continuous Native Generation — ios/ and android/ are regenerated via
+# `expo prebuild` and MUST NOT be committed (they'd drift from app.json).
+apps/*/ios/
+apps/*/android/
 ios/Pods/
 ios/build/
 android/.gradle/
