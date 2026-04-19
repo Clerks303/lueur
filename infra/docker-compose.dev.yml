@@ -40,8 +40,47 @@ services:
       retries: 10
       start_period: 5s
 
+  minio:
+    image: minio/minio:RELEASE.2025-01-18T00-31-37Z
+    container_name: lueur-minio
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID:-lueur_dev}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY:-lueur_dev_secret}
+    ports:
+      - "${S3_PORT:-9000}:9000"
+      - "${S3_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - lueur_minio_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  # One-shot init: creates the lueur-photos bucket then exits.
+  # Re-running docker compose up -d will recreate and re-assert the bucket.
+  minio-init:
+    image: minio/mc:RELEASE.2025-01-17T23-25-50Z
+    container_name: lueur-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -eu
+        mc alias set local http://minio:9000 "${S3_ACCESS_KEY_ID:-lueur_dev}" "${S3_SECRET_ACCESS_KEY:-lueur_dev_secret}"
+        mc mb --ignore-existing local/${S3_BUCKET:-lueur-photos}
+        echo "bucket ${S3_BUCKET:-lueur-photos} ready"
+
 volumes:
   lueur_postgres_data:
     name: lueur_postgres_data
   lueur_redis_data:
     name: lueur_redis_data
+  lueur_minio_data:
+    name: lueur_minio_data
