@@ -1,5 +1,11 @@
 # Changelog — Lueur en public
 
+## Jour 7 — 25 avril 2026
+- Scaffold de l'app mobile : Expo 55, écrans, icônes, palette Lueur appliquée à tous les composants
+- Premier écran vivant : "Une app qui apprend ton goût." — tap sur le CTA crée une session anonyme avec le backend et ouvre l'écran suivant
+- Le client API mobile se génère automatiquement depuis la spec OpenAPI ; toutes les routes sont déjà typées
+- Session persistée dans le Keychain iOS / Keystore Android — tu rouvres l'app, tu es toujours connecté
+
 ## Jour 6 — 24 avril 2026
 - Prompts versionnés : le prompt d'analyse photo vit dans son propre package, verrouillé avec schéma Zod strict et parser qui attrape les sorties malformées
 - Worker en ligne : les photos uploadées passent automatiquement par Claude Opus 4.7 (vision) et ressortent avec une analyse structurée (palette, matières, ambiance, références)
