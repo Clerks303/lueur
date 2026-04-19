@@ -32,10 +32,13 @@
     "db:push": "pnpm --filter @lueur/db db:push",
     "db:reset": "pnpm dev:infra:reset && docker compose -f infra/docker-compose.dev.yml up -d --wait && pnpm db:migrate && pnpm db:seed",
     "dev:api": "pnpm --filter @lueur/api dev",
+    "dev:worker": "pnpm --filter @lueur/worker dev",
+    "dev:all": "pnpm dev:infra && concurrently -n api,worker -c blue,magenta \"pnpm dev:api\" \"pnpm dev:worker\"",
     "api:openapi": "pnpm --filter @lueur/api openapi:export"
   },
   "devDependencies": {
-    "typescript": "catalog:",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "concurrently": "^9.1.2",
+    "typescript": "catalog:"
   }
 }
