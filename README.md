@@ -77,7 +77,8 @@ Workspace commands run from the root:
 
 ## Docs
 
-Product and engineering context lives in `docs/`. Start with `docs/CTO-KICKOFF.md`. Security trade-offs: `docs/SECURITY-ROADMAP.md`.
+Product and engineering context lives in `docs/`. Start with `docs/CTO-KICKOFF.md`.
+Off-WiFi testing via Cloudflare Tunnel: `docs/TUNNEL.md`. Security trade-offs: `docs/SECURITY-ROADMAP.md`.
 
 ## License
 
