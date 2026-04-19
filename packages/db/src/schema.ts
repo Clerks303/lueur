@@ -14,18 +14,96 @@ import {
   vector,
 } from "drizzle-orm/pg-core";
 
-/**
- * Stub user table — Better Auth (T04) will take ownership of the auth surface
- * and add session/account/verification tables around it. Keep columns here
- * minimal so Better Auth's ALTER TABLE can extend it without conflict.
- *
- * Named "user" (quoted in SQL) to match `docs/02-DATA-SCHEMA.md` references.
- */
+// --------------------------------------------------------------------------
+// Auth surface — owned by Better Auth through its Drizzle adapter.
+// Columns match Better Auth's core schema contract (name, email,
+// emailVerified, image, createdAt, updatedAt on user; standard session/
+// account/verification shape). `emailDomainName` from the anonymous plugin
+// fills `email` for anon users so the NOT NULL constraint is safe.
+// --------------------------------------------------------------------------
+
+/** Primary user identity. Shared FK target for every user-scoped table. */
 export const user = pgTable("user", {
   id: uuid("id")
     .primaryKey()
     .default(sql`uuid_generate_v4()`),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").notNull().default(false),
+  image: text("image"),
+  /** Marks a Better Auth anonymous user. Set by the anonymous plugin. */
+  isAnonymous: boolean("is_anonymous").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/** Active sessions issued by Better Auth. */
+export const session = pgTable("session", {
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  token: text("token").notNull().unique(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/** OAuth/provider account links. `password` stays null in Lueur (no password auth). */
+export const account = pgTable("account", {
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  accessTokenExpiresAt: timestamp("access_token_expires_at", {
+    withTimezone: true,
+  }),
+  refreshTokenExpiresAt: timestamp("refresh_token_expires_at", {
+    withTimezone: true,
+  }),
+  scope: text("scope"),
+  idToken: text("id_token"),
+  password: text("password"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/** Short-lived verification tokens (magic-link tokens, email verifications). */
+export const verification = pgTable("verification", {
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** Application profile. Extends the Better Auth user. */
@@ -181,6 +259,9 @@ export const recommendations = pgTable("recommendations", {
 // --------------------------------------------------------------------------
 
 export type User = typeof user.$inferSelect;
+export type Session = typeof session.$inferSelect;
+export type Account = typeof account.$inferSelect;
+export type Verification = typeof verification.$inferSelect;
 export type Profile = typeof profiles.$inferSelect;
 export type TasteGraph = typeof tasteGraphs.$inferSelect;
 export type TasteEvent = typeof tasteEvents.$inferSelect;
@@ -191,6 +272,9 @@ export type Item = typeof items.$inferSelect;
 export type Recommendation = typeof recommendations.$inferSelect;
 
 export type NewUser = typeof user.$inferInsert;
+export type NewSession = typeof session.$inferInsert;
+export type NewAccount = typeof account.$inferInsert;
+export type NewVerification = typeof verification.$inferInsert;
 export type NewProfile = typeof profiles.$inferInsert;
 export type NewTasteGraph = typeof tasteGraphs.$inferInsert;
 export type NewTasteEvent = typeof tasteEvents.$inferInsert;
