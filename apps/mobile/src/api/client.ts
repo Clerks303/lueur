@@ -100,3 +100,90 @@ export async function signInAnonymous(): Promise<void> {
     throw new Error("anonymous sign-in returned no session cookie");
   }
 }
+
+// --------------------------------------------------------------------------
+// Photos
+// --------------------------------------------------------------------------
+
+export interface UploadUrlResponse {
+  photo_id: string;
+  upload_url: string;
+  storage_key: string;
+  expires_in: number;
+  max_bytes: number;
+}
+
+export async function requestUploadUrl(
+  contentType: "image/jpeg" | "image/png",
+): Promise<UploadUrlResponse> {
+  const { data, error } = await api.POST("/photos/upload-url", {
+    body: { content_type: contentType },
+  });
+  if (error || !data) {
+    throw new Error("Impossible d'obtenir l'URL d'upload.");
+  }
+  return data as UploadUrlResponse;
+}
+
+export async function completePhoto(
+  photoId: string,
+): Promise<{ analysis_status: "queued"; job_id: string }> {
+  const { data, error } = await api.POST("/photos/{id}/complete", {
+    params: { path: { id: photoId } },
+  });
+  if (error || !data) {
+    throw new Error("Impossible de finaliser l'upload.");
+  }
+  return data as { analysis_status: "queued"; job_id: string };
+}
+
+export type PhotoStatus =
+  | "pending"
+  | "queued"
+  | "processing"
+  | "done"
+  | "failed";
+
+export interface PhotoRow {
+  id: string;
+  user_id: string;
+  storage_key: string;
+  domain: string | null;
+  analysis: Record<string, unknown> | null;
+  analysis_status: PhotoStatus;
+  created_at: string;
+}
+
+export async function fetchPhoto(photoId: string): Promise<PhotoRow> {
+  const { data, error } = await api.GET("/photos/{id}", {
+    params: { path: { id: photoId } },
+  });
+  if (error || !data) {
+    throw new Error("Impossible de charger la photo.");
+  }
+  return data as PhotoRow;
+}
+
+// --------------------------------------------------------------------------
+// Events
+// --------------------------------------------------------------------------
+
+export type EventType =
+  | "photo_analyzed"
+  | "duel_answered"
+  | "correction"
+  | "graph_rebuilt"
+  | "reco_feedback"
+  | "import";
+
+export async function postEvent(
+  eventType: EventType,
+  payload: Record<string, unknown>,
+): Promise<void> {
+  const { error } = await api.POST("/events", {
+    body: { event_type: eventType, payload },
+  });
+  if (error) {
+    throw new Error("Impossible d'enregistrer l'événement.");
+  }
+}
