@@ -1,5 +1,12 @@
 # Changelog — Lueur en public
 
+## Jour 5 — 23 avril 2026
+- Stockage objets en local avec MinIO : même API S3 que Scaleway en prod, swap via variables d'env
+- L'app mobile peut demander une URL signée pour uploader une photo directement (sans passer par l'API)
+- Endpoints `POST /photos/upload-url`, `POST /photos/:id/complete`, `GET /photos/:id` prêts pour les écrans 2 et 3
+- Première file d'attente : les photos complétées atterrissent dans Redis, attendent que le worker les analyse (semaine prochaine)
+- Le CI vérifie désormais que la spec OpenAPI committée est à jour à chaque push
+
 ## Jour 4 — 22 avril 2026
 - API Lueur en ligne en local : Bun + Hono sur le port 3200 avec hot reload
 - Auth anonyme fonctionnelle (on crée une session sans email, on la garde 30 jours)

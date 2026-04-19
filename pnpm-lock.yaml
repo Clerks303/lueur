@@ -138,10 +138,17 @@ importers:
         version: 2.1.9(@types/node@22.19.17)
 
   packages/prompts:
+    dependencies:
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 2.1.9(@types/node@22.19.17)
 
   packages/shared-types:
     devDependencies:
