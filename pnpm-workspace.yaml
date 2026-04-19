@@ -8,3 +8,10 @@ catalog:
   typescript: ^5.7.2
   "@types/node": ^22.10.0
   vitest: ^2.1.8
+
+# Silence peer-deps we intentionally don't install.
+peerDependencyRules:
+  ignoreMissing:
+    # Better Auth declares better-sqlite3 as a peer for its SQLite adapter;
+    # we use the Postgres adapter, so this is safe to ignore.
+    - "better-sqlite3"

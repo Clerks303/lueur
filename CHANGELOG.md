@@ -1,5 +1,12 @@
 # Changelog — Lueur en public
 
+## Jour 4 — 22 avril 2026
+- API Lueur en ligne en local : Bun + Hono sur le port 3200 avec hot reload
+- Auth anonyme fonctionnelle (on crée une session sans email, on la garde 30 jours)
+- Lien magique par email prêt à partir (Resend, template français sobre et signé Lueur)
+- Premier endpoint métier : enregistrer les corrections et interactions de l'utilisateur
+- Spec OpenAPI auto-générée — le générateur de client mobile s'appuiera dessus en semaine 2
+
 ## Jour 3 — 21 avril 2026
 - Schéma base de données complet, 9 tables pour le graphe de goût (ORM Drizzle, pgvector)
 - Catalogue de démarrage : 20 duels curés et 50 objets de l'univers Lueur (chaises Wegner, APC, Margaret Howell, ryokan…)

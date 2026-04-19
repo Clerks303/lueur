@@ -35,6 +35,11 @@ jobs:
           node-version: "20"
           cache: pnpm
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.12
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -43,3 +48,16 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+      - name: Check OpenAPI spec is up to date
+        env:
+          # Dummy values so loadEnv() passes during the module import that
+          # happens when generating the spec. No real DB is contacted.
+          DATABASE_URL: postgres://dummy:dummy@localhost:1/dummy
+          BETTER_AUTH_SECRET: ci-openapi-secret-000000000000000000000000
+        run: |
+          pnpm api:openapi
+          if ! git diff --exit-code packages/shared-types/openapi.json; then
+            echo "::error::OpenAPI spec is stale. Run 'pnpm api:openapi' locally and commit the updated file."
+            exit 1
+          fi
