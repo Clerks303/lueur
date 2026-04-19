@@ -24,7 +24,12 @@
     "test": "pnpm -r --parallel --stream test",
     "build": "pnpm -r --stream build --if-present",
     "lint": "echo \"lint setup deferred (no ESLint until needed)\" && exit 0",
-    "clean": "pnpm -r --parallel exec rm -rf dist node_modules/.cache tsconfig.tsbuildinfo"
+    "clean": "pnpm -r --parallel exec rm -rf dist node_modules/.cache tsconfig.tsbuildinfo",
+    "db:generate": "pnpm --filter @lueur/db db:generate",
+    "db:migrate": "pnpm --filter @lueur/db db:migrate",
+    "db:seed": "pnpm --filter @lueur/db db:seed",
+    "db:studio": "pnpm --filter @lueur/db db:studio",
+    "db:push": "pnpm --filter @lueur/db db:push"
   },
   "devDependencies": {
     "typescript": "catalog:",

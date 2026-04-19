@@ -1,3 +1,3 @@
-// Drizzle schema, client, and taste graph derivation land here at T03.
-// See docs/02-DATA-SCHEMA.md for the SQL source of truth.
-export {};
+export * from "./schema.js";
+export { createDb, type Database } from "./client.js";
+export { loadEnv, requireDatabaseUrl } from "./env.js";
