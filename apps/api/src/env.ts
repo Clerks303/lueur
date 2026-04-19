@@ -33,6 +33,18 @@ const schema = z.object({
   RESEND_API_KEY: z.string().optional(),
   RESEND_FROM: z.string().default("Lueur <onboarding@resend.dev>"),
 
+  REDIS_URL: z.string().default("redis://localhost:63799"),
+
+  S3_ENDPOINT: z.string().default("http://localhost:9000"),
+  S3_REGION: z.string().default("us-east-1"),
+  S3_BUCKET: z.string().default("lueur-photos"),
+  S3_ACCESS_KEY_ID: z.string().min(1, "S3_ACCESS_KEY_ID is required"),
+  S3_SECRET_ACCESS_KEY: z.string().min(1, "S3_SECRET_ACCESS_KEY is required"),
+  S3_FORCE_PATH_STYLE: z
+    .string()
+    .default("true")
+    .transform((v) => v.toLowerCase() === "true"),
+
   LOG_LEVEL: z
     .enum(["trace", "debug", "info", "warn", "error", "fatal", "silent"])
     .default("info"),

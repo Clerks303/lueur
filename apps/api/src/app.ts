@@ -13,6 +13,7 @@ import { logger } from "./lib/logger.js";
 import { sessionMiddleware } from "./middleware/session.js";
 import { registerEventsRoutes } from "./routes/events.js";
 import { registerHealthRoutes } from "./routes/health.js";
+import { registerPhotosRoutes } from "./routes/photos.js";
 import type { AppEnv } from "./types.js";
 
 export function buildApp(): OpenAPIHono<AppEnv> {
@@ -59,6 +60,7 @@ export function buildApp(): OpenAPIHono<AppEnv> {
 
   registerHealthRoutes(app);
   registerEventsRoutes(app);
+  registerPhotosRoutes(app);
 
   // Central OpenAPI spec.
   app.doc("/openapi.json", {

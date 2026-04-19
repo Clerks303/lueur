@@ -25,3 +25,5 @@ process.env.NODE_ENV ??= "test";
 process.env.BETTER_AUTH_SECRET ??= "test-secret-" + "0".repeat(32);
 process.env.BETTER_AUTH_URL ??= "http://localhost:3200";
 process.env.DATABASE_URL ??= "postgres://dummy:dummy@127.0.0.1:1/dummy";
+process.env.S3_ACCESS_KEY_ID ??= "dummy";
+process.env.S3_SECRET_ACCESS_KEY ??= "dummy";
