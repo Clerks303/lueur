@@ -1,0 +1,23 @@
+{
+  "name": "lueur",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Une app qui apprend ton goût. Et s'en souvient.",
+  "license": "MIT",
+  "author": "Romain Sultan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clerks303/lueur.git"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev:infra": "docker compose -f infra/docker-compose.dev.yml up -d",
+    "dev:infra:down": "docker compose -f infra/docker-compose.dev.yml down",
+    "dev:infra:reset": "docker compose -f infra/docker-compose.dev.yml down -v",
+    "dev:infra:logs": "docker compose -f infra/docker-compose.dev.yml logs -f",
+    "dev:infra:ps": "docker compose -f infra/docker-compose.dev.yml ps"
+  }
+}

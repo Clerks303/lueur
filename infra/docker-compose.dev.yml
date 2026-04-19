@@ -1,0 +1,47 @@
+# Local development infrastructure for Lueur.
+# Services run on the host loopback so Bun/Expo can connect without networking gymnastics.
+# Wipe volumes with `pnpm dev:infra:reset` when you want a clean slate.
+
+name: lueur-dev
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: lueur-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-lueur}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lueur_dev_pw}
+      POSTGRES_DB: ${POSTGRES_DB:-lueur}
+    ports:
+      - "${POSTGRES_PORT:-54329}:5432"
+    volumes:
+      - lueur_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lueur} -d ${POSTGRES_DB:-lueur}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    container_name: lueur-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1"]
+    ports:
+      - "${REDIS_PORT:-63799}:6379"
+    volumes:
+      - lueur_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  lueur_postgres_data:
+    name: lueur_postgres_data
+  lueur_redis_data:
+    name: lueur_redis_data

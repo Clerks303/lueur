@@ -12,9 +12,43 @@ Week 1 — infrastructure and onboarding wow moment. See `docs/05-ROADMAP-WEEK-1
 
 ## Stack
 
-Mobile: Expo / React Native / TypeScript. Backend: Bun + Hono. DB: PostgreSQL + pgvector. AI: Anthropic Claude + OpenAI embeddings. Infra: self-hosted on OVH, Docker + Caddy.
+Mobile: Expo / React Native / TypeScript. Backend: Bun + Hono. DB: PostgreSQL 16 + pgvector. Queue: Redis 7 + BullMQ. AI: Anthropic Claude + OpenAI embeddings. Infra in dev: Docker Compose (local). Infra in prod (later): self-hosted on OVH, Docker + Caddy.
 
 See `docs/01-STACK.md` for the locked decisions.
+
+## Local development setup
+
+Prerequisites:
+
+- **Docker Desktop** (v29+) with Compose v2
+- **Node.js** ≥ 20
+- **pnpm** ≥ 9.15 — `npm install -g pnpm`
+
+First-time setup:
+
+```bash
+git clone https://github.com/Clerks303/lueur.git
+cd lueur
+cp .env.example .env.local          # fill secrets as they become needed
+pnpm dev:infra                       # starts Postgres + Redis
+```
+
+Daily workflow:
+
+| Command | What it does |
+|---|---|
+| `pnpm dev:infra` | Start Postgres + Redis (detached). Safe to re-run. |
+| `pnpm dev:infra:ps` | Show container status and health. |
+| `pnpm dev:infra:logs` | Tail logs from both services. |
+| `pnpm dev:infra:down` | Stop containers. **Data persists** in named volumes. |
+| `pnpm dev:infra:reset` | Stop **and wipe** volumes. Use when you want a clean DB. |
+
+Ports (chosen to avoid collision with other local Postgres/Redis instances):
+
+- **Postgres** → `localhost:54329` (internal port is still `5432`)
+- **Redis** → `localhost:63799` (internal `6379`)
+
+Connection strings are in `.env.example`.
 
 ## Docs
 
