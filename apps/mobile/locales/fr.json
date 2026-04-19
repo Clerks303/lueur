@@ -1,0 +1,5 @@
+{
+  "CFBundleDisplayName": "Lueur",
+  "NSCameraUsageDescription": "Lueur analyse les photos que tu prends pour comprendre ton esthétique.",
+  "NSPhotoLibraryUsageDescription": "Lueur regarde les images que tu partages pour apprendre ton goût."
+}

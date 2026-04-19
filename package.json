@@ -33,8 +33,13 @@
     "db:reset": "pnpm dev:infra:reset && docker compose -f infra/docker-compose.dev.yml up -d --wait && pnpm db:migrate && pnpm db:seed",
     "dev:api": "pnpm --filter @lueur/api dev",
     "dev:worker": "pnpm --filter @lueur/worker dev",
+    "dev:mobile": "pnpm --filter @lueur/mobile start",
     "dev:all": "pnpm dev:infra && concurrently -n api,worker -c blue,magenta \"pnpm dev:api\" \"pnpm dev:worker\"",
-    "api:openapi": "pnpm --filter @lueur/api openapi:export"
+    "api:openapi": "pnpm --filter @lueur/api openapi:export",
+    "mobile:api:gen": "pnpm api:openapi && pnpm --filter @lueur/mobile api:gen",
+    "mobile:ios": "pnpm --filter @lueur/mobile ios",
+    "mobile:android": "pnpm --filter @lueur/mobile android",
+    "mobile:icons": "pnpm --filter @lueur/mobile icons:gen"
   },
   "devDependencies": {
     "@types/node": "catalog:",

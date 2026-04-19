@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foreground layer for Android adaptive icon. Background is set via
+     app.json > android.adaptiveIcon.backgroundColor = #FAF6EE. The
+     "L" sits within the safe zone (inner ~66% of the 1024 square). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <text x="512" y="680" text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-style="italic" font-weight="400"
+    font-size="500" fill="#A8533A">L</text>
+</svg>

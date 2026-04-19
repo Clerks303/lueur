@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "Lueur",
+    "slug": "lueur",
+    "version": "0.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "lueur",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FAF6EE"
+    },
+    "ios": {
+      "bundleIdentifier": "app.lueur.mobile",
+      "supportsTablet": false,
+      "associatedDomains": [],
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "Lueur analyse les photos que tu prends pour comprendre ton esthétique.",
+        "NSPhotoLibraryUsageDescription": "Lueur regarde les images que tu partages pour apprendre ton goût.",
+        "CFBundleAllowMixedLocalizations": true
+      }
+    },
+    "android": {
+      "package": "app.lueur.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FAF6EE"
+      },
+      "edgeToEdgeEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [{ "scheme": "lueur" }],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "locales": {
+      "fr": "./locales/fr.json"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Lueur analyse les photos que tu prends pour comprendre ton esthétique."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
