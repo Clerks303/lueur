@@ -1,5 +1,11 @@
 # Changelog — Lueur en public
 
+## Jour 3 — 21 avril 2026
+- Schéma base de données complet, 9 tables pour le graphe de goût (ORM Drizzle, pgvector)
+- Catalogue de démarrage : 20 duels curés et 50 objets de l'univers Lueur (chaises Wegner, APC, Margaret Howell, ryokan…)
+- Tests de base qui vérifient que la migration et le seed tournent sans accroc
+- Runtime Bun installé, CHANGELOG public démarré
+
 ## Jour 2 — 20 avril 2026
 - Monorepo pnpm en place avec 6 workspaces (api, worker, mobile + 3 packages)
 - TypeScript strict, CI GitHub Actions verte sur chaque push

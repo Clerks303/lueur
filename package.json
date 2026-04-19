@@ -29,7 +29,8 @@
     "db:migrate": "pnpm --filter @lueur/db db:migrate",
     "db:seed": "pnpm --filter @lueur/db db:seed",
     "db:studio": "pnpm --filter @lueur/db db:studio",
-    "db:push": "pnpm --filter @lueur/db db:push"
+    "db:push": "pnpm --filter @lueur/db db:push",
+    "db:reset": "pnpm dev:infra:reset && docker compose -f infra/docker-compose.dev.yml up -d --wait && pnpm db:migrate && pnpm db:seed"
   },
   "devDependencies": {
     "typescript": "catalog:",
