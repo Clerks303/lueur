@@ -1,0 +1,10 @@
+{
+  "name": "@lueur/mobile",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Lueur mobile app (Expo / React Native). Scaffold at T09.",
+  "scripts": {
+    "typecheck": "echo \"(Expo project not initialized yet; T09)\" && exit 0",
+    "test": "echo \"(no tests yet; mobile UI tests skipped for MVP per docs/CTO-KICKOFF.md)\" && exit 0"
+  }
+}

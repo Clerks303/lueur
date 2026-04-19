@@ -50,9 +50,34 @@ Ports (chosen to avoid collision with other local Postgres/Redis instances):
 
 Connection strings are in `.env.example`.
 
+## Monorepo layout
+
+```
+apps/
+  api/        Hono + Bun HTTP API            (scaffolded at T04)
+  worker/     BullMQ worker                  (scaffolded at T07)
+  mobile/     Expo / React Native app        (scaffolded at T09)
+packages/
+  shared-types/   TS types shared across apps
+  prompts/        Versioned AI system prompts (see docs/04-PROMPTS.md)
+  db/             Drizzle schema + taste graph derivation
+infra/            Docker Compose for local dev
+docs/             Product + engineering context
+.github/          CI workflow
+```
+
+Workspace commands run from the root:
+
+| Command | Purpose |
+|---|---|
+| `pnpm install` | Install dependencies for all workspaces |
+| `pnpm typecheck` | Run `tsc --noEmit` in every workspace, in parallel |
+| `pnpm test` | Run `test` script in every workspace, in parallel |
+| `pnpm build` | Run `build` where defined |
+
 ## Docs
 
-Product and engineering context lives in `docs/`. Start with `docs/CTO-KICKOFF.md`.
+Product and engineering context lives in `docs/`. Start with `docs/CTO-KICKOFF.md`. Security trade-offs: `docs/SECURITY-ROADMAP.md`.
 
 ## License
 

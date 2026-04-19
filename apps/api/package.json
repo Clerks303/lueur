@@ -1,0 +1,21 @@
+{
+  "name": "@lueur/api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Lueur HTTP API. Bun runtime, Hono framework. See docs/01-STACK.md.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"(no tests yet)\" && exit 0"
+  },
+  "dependencies": {
+    "@lueur/shared-types": "workspace:*",
+    "@lueur/db": "workspace:*",
+    "@lueur/prompts": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
