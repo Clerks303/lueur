@@ -11,7 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Silence the Node 20 deprecation notice on the JS actions we use.
+  # TODO: remove once upstream actions migrate off Node 20 (~Q3 2026).
+  # Silences the Node 20 deprecation notice on the JS actions we use today.
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
