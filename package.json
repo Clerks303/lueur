@@ -30,7 +30,9 @@
     "db:seed": "pnpm --filter @lueur/db db:seed",
     "db:studio": "pnpm --filter @lueur/db db:studio",
     "db:push": "pnpm --filter @lueur/db db:push",
-    "db:reset": "pnpm dev:infra:reset && docker compose -f infra/docker-compose.dev.yml up -d --wait && pnpm db:migrate && pnpm db:seed"
+    "db:reset": "pnpm dev:infra:reset && docker compose -f infra/docker-compose.dev.yml up -d --wait && pnpm db:migrate && pnpm db:seed",
+    "dev:api": "pnpm --filter @lueur/api dev",
+    "api:openapi": "pnpm --filter @lueur/api openapi:export"
   },
   "devDependencies": {
     "typescript": "catalog:",

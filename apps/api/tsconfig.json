@@ -2,13 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
-    "types": ["node"]
+    "rootDir": ".",
+    "types": ["bun", "node"],
+    "moduleResolution": "bundler"
   },
-  "include": ["src/**/*"],
-  "references": [
-    { "path": "../../packages/shared-types" },
-    { "path": "../../packages/db" },
-    { "path": "../../packages/prompts" }
-  ]
+  "include": ["src/**/*", "tests/**/*", "vitest.config.ts"]
 }
