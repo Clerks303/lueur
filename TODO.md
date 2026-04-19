@@ -12,6 +12,10 @@ Non-blocking items we have consciously deferred. Keep terse, one line each; open
 
 - **Replace `picsum.photos` seeds with curated real images** — Margaret Howell on their site, Wegner CH24 on Carl Hansen, APC Martin on APC, etc. Same image must ship to the mobile preview AND feed the embedding pipeline. Current deterministic picsum URLs are placeholder-only and will bias embeddings toward "random photo" if fed to OpenAI `text-embedding-3-large`.
 
+## After first real Anthropic runs (post-T12)
+
+- **Tune BullMQ backoff on analyze-photo** — current config is 3 attempts with exponential backoff from 5 s. Adjust once we have real Claude Opus 4.7 latency distributions; the onboarding polls every 800 ms so retries should not dominate the perceived wait.
+
 ## When the catalogue crosses ~10k items
 
 - **Migrate ivfflat → HNSW on `items.embedding`** — pgvector 0.8+ supports HNSW with better recall and no `lists` tuning. Keep ivfflat while we're <1k items; it works and the NOTICE is informational.

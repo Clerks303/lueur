@@ -1,5 +1,11 @@
 # Changelog — Lueur en public
 
+## Jour 6 — 24 avril 2026
+- Prompts versionnés : le prompt d'analyse photo vit dans son propre package, verrouillé avec schéma Zod strict et parser qui attrape les sorties malformées
+- Worker en ligne : les photos uploadées passent automatiquement par Claude Opus 4.7 (vision) et ressortent avec une analyse structurée (palette, matières, ambiance, références)
+- La boucle backend est complète — écran de capture → upload → analyse IA → graphe qui apprend
+- Plus que le mobile à brancher (semaine 2)
+
 ## Jour 5 — 23 avril 2026
 - Stockage objets en local avec MinIO : même API S3 que Scaleway en prod, swap via variables d'env
 - L'app mobile peut demander une URL signée pour uploader une photo directement (sans passer par l'API)
