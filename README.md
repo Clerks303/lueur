@@ -1,5 +1,7 @@
 # lueur
 
+[![CI](https://github.com/Clerks303/lueur/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Clerks303/lueur/actions/workflows/ci.yml)
+
 > Une app qui apprend ton goût. Et s'en souvient.
 
 **Lueur** is a mobile app (iOS + Android, React Native) that learns a user's aesthetic taste across domains — interior, clothing, food, music, travel — through photos of things they already love and daily 30-second *duels*. The result is a structured, explainable, user-owned **taste graph** that AI agents can later query with permission.
